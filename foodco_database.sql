@@ -61,4 +61,20 @@ values
 https://github.com/Muyiiwaa/sql_for_data
 */
 
+insert into orders(amount,branch_id,staff_id)
+values
+(2000,1,3),
+(12000,4,1),
+(4000,3,3),
+(24000,1,3),
+(2500,2,2),
+(2000,1,3),
+(12000,4,1),
+(5000,3,2),
+(24050,1,3),
+(2500,4,1);
+
+select *
+from orders;
+
 
