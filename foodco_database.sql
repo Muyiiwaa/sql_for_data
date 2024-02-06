@@ -49,4 +49,16 @@ values
 (3,'Ekosodin','Benin'),
 (4,'Lekki','Lagos');
 
+insert into staff()
+values
+(1,'John Boyega','m',2),
+(2,'Helen Keller','f',2),
+(3,'Luka Doncic','m',1),
+(4,'Adewale Ogunmefun','f',3),
+(5,'Betha Bethlehem','f',4),
+(6,'Gary Peyton','m',4);
+/*
+https://github.com/Muyiiwaa/sql_for_data
+*/
+
 
