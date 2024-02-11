@@ -47,3 +47,8 @@ where shippeddate > requireddate;
 
 -- assignments
 
+-- return the name of top 5 best performing employees in terms of number of orders and
+-- their percentage contribution
+
+-- return the list of products that were not sold in Canada in 1997
+
