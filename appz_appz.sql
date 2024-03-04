@@ -188,3 +188,109 @@ where orderid in (
     )
 );
 
+-- CTEs, FUNCTIONS & CASE
+
+-- return the name employees and the number of times
+-- they are responsible for sending a late order.
+
+with cte_1 as (
+	select o.orderid, e.lastname, e.firstname,
+		o.shippeddate, o.requireddate
+    from orders o
+    join employees e on e.EmployeeID = o.EmployeeID
+    where o.ShippedDate > o.RequiredDate
+)
+select firstname, lastname, count(orderid) as no_of_orders
+from cte_1
+group by firstname,lastname
+order by no_of_orders desc;
+
+-- names of employees that earns above average
+-- subquery
+select firstname, lastname, salary
+from employees
+where salary > (
+	select avg(Salary)
+    from employees
+);
+
+
+
+-- cte solution
+with cte_1 as (
+	select avg(salary) as avg_salary
+    from employees
+)
+select firstname, lastname, salary
+from employees
+where salary > (
+	select avg_salary
+    from cte_1
+);
+
+-- returns the number of customers and suppliers we have in each country
+
+with cte_1 as (
+	select country, count(customerid) as no_of_customers
+	from customers
+	group by country
+),
+cte_2 as (
+	select country, count(supplierid) as no_of_suppliers
+	from suppliers
+    group by country
+)
+select case
+			when a.country is null then 'unknown country'
+            else a.country
+		end as country, 
+case
+	when a.no_of_customers is null then 0
+    else a.no_of_customers
+end as no_of_customers, 
+case 
+	when b.no_of_suppliers is null then 0
+    else b.no_of_suppliers
+end as no_of_suppliers
+from cte_1 a
+left join cte_2 b on b.country = a.country
+union
+select 
+	case
+		when a.country is null then 'unknown country'
+        else a.country
+        end as country,
+	case 
+		when b.no_of_customers is null then 0
+        else b.no_of_customers
+	end as no_of_customers,
+    case 
+		when a.no_of_suppliers is null then 0
+        else a.no_of_suppliers
+	end as no_of_suppliers
+from cte_2 a
+left join cte_1 b on b.country = a.country;
+
+-- return employee name and whether or not they are due for retirement.
+
+select firstname, lastname,
+	year(now()) - year(hiredate) as service_year,
+    case
+		when year(now()) - year(hiredate) <= 30 then 'Not Due'
+        else 'Due'
+	end as retirement_status
+from employees;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
